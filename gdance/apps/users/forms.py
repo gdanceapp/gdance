@@ -16,7 +16,6 @@ class NewUserForm(forms.Form):
 	foto = forms.FileField(required = False)
 
 	def new_user(self, tipo):
-		print tipo
 		first_name = self.cleaned_data['first_name']
 		last_name = self.cleaned_data['last_name']
 		tipo_documento = self.cleaned_data['tipo_documento']
