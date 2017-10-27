@@ -17,13 +17,19 @@
 				<p class="m-0 text-center text-white">Copyright &copy; GDANCE 2017</p>
 			</div>
 		</footer>
+		<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
 		<script src="{% static 'js/jquery.min.js' %}"></script>
 		<script src="{% static 'js/bootstrap.min.js' %}"></script>
 		<script src="{% static 'js/moment.min.js' %}"></script>
 		<script src="{% static 'js/bootstrap.datetimepicker.min.js' %}"></script>
 		<script>
-			$('.date').datetimepicker({
-				format: 'YYYY-MM-DD HH:mm'
+			$(document).on("click", ".open-modal", function(e){
+				$('#Modal').load($(this).attr('href'),function(){
+					$('#Modal').modal({
+						show:true
+					});
+				});
+				return false;
 			});
 		</script>
 		{% block script %}{% endblock %}

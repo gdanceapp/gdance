@@ -15,13 +15,17 @@
 						<th>Acción</th>
 					</thead>
 					<tbody>
-						{% for user in object_list %}
+						{% for user_object in object_list %}
 							<tr>
-								<td>{{ user.profileuser.numero_documento }}</td>
-								<td>{{ user.profileuser.get_full_name }}</td>
-								<td>{{ user.profileuser.numero_telefono }}</td>
+								<td>{{ user_object.profileuser.numero_documento }}</td>
+								<td>{{ user_object.profileuser.get_full_name }}</td>
+								<td>{{ user_object.profileuser.numero_telefono }}</td>
 								<td>
-									<a href="#" class="btn btn-info">Ver perfil</a>
+									<a href="{% url 'detail-user' tipo user_object.pk %}" class="btn btn-info">Ver perfil</a>
+									{% if user.is_superuser %}
+										<a href="#" class="btn btn-success">Editar</a>
+										<a href="{% url 'delete-user' tipo user_object.pk %}" class="btn btn-danger open-modal" data-toggle="modal" data-target="#Modal">Eliminar</a>
+									{% endif %}
 								</td>
 							</tr>
 						{% endfor %}
@@ -53,9 +57,6 @@
 							</li>
 							<li class="list-group-item">
 								<a href="{% url 'list-user' 'entrenador' %}">Gestión de entrenadores</a>
-							</li>
-							<li class="list-group-item">
-								<a href="#">Gestión de administradores</a>
 							</li>
 						</ul>
 					</div>

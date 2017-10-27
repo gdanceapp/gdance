@@ -61,3 +61,25 @@ class ListUserView(FormMixin, ListView):
 		if self.kwargs['tipo'] != 'none':
 			queryset = queryset.filter(groups__name = self.kwargs['tipo'])
 		return queryset
+
+class DeleteUserView(DeleteView):
+	model = User
+	template_name = 'elements/form_delete.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(DeleteUserView, self).get_context_data(**kwargs)
+		context['title'] = 'Confirmación'
+		context['url'] = reverse('delete-user', kwargs = {'pk': self.kwargs['pk'], 'tipo': self.kwargs['tipo']})
+		return context
+
+	def get_success_url(self):
+		return reverse('list-user', kwargs = {'tipo': self.kwargs['tipo']})
+
+class UserDetailView(DetailView):
+	model = User
+	template_name = template_dir+'detail_usuario.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(UserDetailView, self).get_context_data(**kwargs)
+		context['title'] = 'Detalle del usuario'
+		return context

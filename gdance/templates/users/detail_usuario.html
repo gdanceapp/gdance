@@ -1,0 +1,18 @@
+{% extends 'layouts/index.html' %}
+
+{% load static %}
+
+{% block content %}
+	<div class="container" style="margin-top:80px;">
+		<div class="row">
+			<div class="col-md-2">
+				<img src="{% static object.profileuser.get_foto %}" class="img-responsive">
+			</div>
+			<div class="col-md-10">
+				<h1>{{ object.profileuser.get_full_name }}</h1>
+				<h3>Perfil <b>{{ object.groups.all.0 }}</b></h3>
+			</div>
+		</div>
+		{{ object }}
+	</div>
+{% endblock %}

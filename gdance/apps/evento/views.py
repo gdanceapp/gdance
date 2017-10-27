@@ -64,3 +64,16 @@ class EventoUpdateView(SuccessMessageMixin, UpdateView):
 
 	def get_success_url(self):
 		return reverse('list-evento')
+
+class EventoDeleteView(DeleteView):
+	model = Evento
+	template_name = 'elements/form_delete.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(EventoDeleteView, self).get_context_data(**kwargs)
+		context['title'] = 'Confirmación'
+		context['url'] = reverse('delete-evento', kwargs = {'pk': self.kwargs['pk']})
+		return context
+
+	def get_success_url(self):
+		return reverse('list-evento')

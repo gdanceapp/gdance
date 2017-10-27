@@ -6,7 +6,9 @@
 		<div class="row">
 			<div class="col-md-8">
 				<h2>Lista de eventos
-					<a href="{% url 'add-evento' %}" class="btn btn-success">Agregar evento</a>
+					{% if user.is_superuser or user.groups.name == 'Entrenador' %}
+						<a href="{% url 'add-evento' %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Agregar evento</a>
+					{% endif %}
 				</h2>
 				<div class="row">
 					{% for event in object_list %}
@@ -14,8 +16,9 @@
 							<b>{{ event }}</b>
 							<p><b>Fecha:</b> {{ event.fecha_evento }}</p>
 							<p><b>Dirección:</b> {{ event.direccion_evento }}</p>
-							{% if event.organizador == request.user.profileuser %}
-								<a href="{% url 'edit-evento' event.pk %}" class="btn btn-success">Editar</a>
+							{% if event.organizador == request.user.profileuser or user.is_superuser %}
+								<a href="{% url 'edit-evento' event.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Editar</a>
+								<a href="{% url 'delete-evento' event.pk %}" class="btn btn-danger open-modal" data-toggle="modal" data-target="#Modal">Elimnar</a>
 							{% endif %}
 						</div>
 					{% endfor %}
