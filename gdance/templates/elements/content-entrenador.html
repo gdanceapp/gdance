@@ -1,0 +1,21 @@
+<h3>Horario <a href="{% url 'add-horario' object.pk %}" class="btn btn-info open-modal" data-toggle="modal" data-target="#Modal">Agregar horario</a></h3>
+<table class="table table-hover table-bordered">
+	<thead>
+		<th>Día</th>
+		<th>Hora inicio</th>
+		<th>Hora final</th>
+		<th>Acción</th>
+	</thead>
+	<tbody>
+		{% for schedule in object.profileuser.schedule_set.all %}
+			<tr>
+				<td>{{ schedule.get_dia_semana }}</td>
+				<td>{{ schedule.hora_inicio }}</td>
+				<td>{{ schedule.hora_final }}</td>
+				<td>
+					<a class="btn btn-success">Editar</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>

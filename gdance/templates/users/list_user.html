@@ -23,7 +23,6 @@
 								<td>
 									<a href="{% url 'detail-user' tipo user_object.pk %}" class="btn btn-info">Ver perfil</a>
 									{% if user.is_superuser %}
-										<a href="#" class="btn btn-success">Editar</a>
 										<a href="{% url 'delete-user' tipo user_object.pk %}" class="btn btn-danger open-modal" data-toggle="modal" data-target="#Modal">Eliminar</a>
 									{% endif %}
 								</td>

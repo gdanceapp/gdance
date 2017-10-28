@@ -21,4 +21,5 @@ urlpatterns = patterns('gdance.apps.users.views',
 	url(r'^ingresar/$', login_forbidden(auth_views.login), {'template_name': 'users/form_login.html', 'extra_context': {'title': 'Ingresar'}}, name = 'login'),
 	url(r'^salir/$', auth_views.logout, {'next_page': '/'}, name = 'logout'),
 	url(r'^(?P<tipo>[-\w]+)/', include(user_type_detail_patterns)),
+	url(r'^(?P<user>\d+)/horario/$', login_required(group_required(['entrenador'])(ScheduleAddView.as_view())), name = 'add-horario'),
 )

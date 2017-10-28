@@ -83,3 +83,22 @@ class UserDetailView(DetailView):
 		context = super(UserDetailView, self).get_context_data(**kwargs)
 		context['title'] = 'Detalle del usuario'
 		return context
+
+class ScheduleAddView(SuccessMessageMixin, CreateView):
+	template_name = 'elements/form_general.html'
+	success_message = 'Horario agregado correctamente'
+	form_class = ScheduleForm
+
+	def get_context_data(self, **kwargs):
+		context = super(ScheduleAddView, self).get_context_data(**kwargs)
+		context['title'] = 'Agregar horario'
+		context['url'] = reverse('add-horario', kwargs = {'user': self.kwargs['user']})
+		return context
+
+	def form_valid(self, form):
+		form.instance.entrenador = User.objects.get(pk = self.kwargs['user']).profileuser
+		return super(ScheduleAddView, self).form_valid(form)
+
+	def get_success_url(self):
+		user = User.objects.get(pk = self.kwargs['user'])
+		return reverse('detail-user', kwargs = {'tipo': user.groups.all()[0].name, 'pk': user.pk})

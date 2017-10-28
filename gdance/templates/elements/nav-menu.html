@@ -32,13 +32,18 @@
 					</ul>
 				</li>
 			{% endif %}
-			<li>
-				{% if user.is_authenticated %}
+			{% if user.is_authenticated %}
+				<li>
+					<a href="#">Perfil</a>
+				</li>
+				<li>
 					<a href="{% url 'logout' %}">Cerrar sesión</a>
-				{% else %}
+				</li>
+			{% else %}
+				<li>
 					<a href="{% url 'login' %}">Iniciar sesión</a>
-				{% endif %}
-			</li>
+				</li>
+			{% endif %}
 		</ul>
 	</div>
 </nav>

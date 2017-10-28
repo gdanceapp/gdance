@@ -21,7 +21,6 @@ class EventoForm(forms.ModelForm):
 		}
 
 	def __init__(self, *args, **kwargs):
-		slug = kwargs.pop('slug', None)
 		super(EventoForm, self).__init__(*args, **kwargs)
 		self.fields['estado'].widget.attrs.update({'required': True, 'class': 'form-control'})
 
