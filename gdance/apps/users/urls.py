@@ -9,6 +9,7 @@ login_forbidden = user_passes_test(lambda u: u.is_anonymous(), '/')
 user_detail_patterns = [
 	url(r'^eliminar/$', login_required(group_required(['entrenador'])(DeleteUserView.as_view())), name='delete-user'),
 	url(r'^detalle/$', login_required(UserDetailView.as_view()), name='detail-user'),
+	url(r'^agregar-modalidad/$', login_required(group_required(['entrenador'])(AddModalidadUserView.as_view())), name='add-modalidad-user'),
 ]
 
 user_type_detail_patterns = [
@@ -22,4 +23,8 @@ urlpatterns = patterns('gdance.apps.users.views',
 	url(r'^salir/$', auth_views.logout, {'next_page': '/'}, name = 'logout'),
 	url(r'^(?P<tipo>[-\w]+)/', include(user_type_detail_patterns)),
 	url(r'^(?P<user>\d+)/horario/$', login_required(group_required(['entrenador'])(ScheduleAddView.as_view())), name = 'add-horario'),
+	url(r'^editar-nombre-usuario/(?P<pk>\d+)/$', login_required(EditNameUserView.as_view()), name='edit-name-user'),
+	url(r'^editar-perfil-usuario/(?P<pk>\d+)/$', login_required(EditProfileUserView.as_view()), name='edit-profile-user'),
+	url(r'^eliminar-horario/(?P<pk>\d+)/$', 'UserDetailScheduleView', name='delete-horario-user'),
+	url(r'^eliminar-modalidad-usuario/(?P<pk>\d+)/(?P<user>[-\w]+)/$', login_required(group_required(['entrenador'])(DeleteModalidadPersonaView.as_view())), name='delete-modalidad-user'),
 )

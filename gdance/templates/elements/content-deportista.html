@@ -1,0 +1,32 @@
+<h3>
+	Modalidad del deportista
+	{% if request.user.is_superuser or request.user.groups.all.0.name == 'entrenador' %}
+		<a href="{% url 'add-modalidad-user' object.groups.all.0.name object.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Agregar modalidad</a>
+	{% endif %}
+</h3>
+<table class="table table-hover table-bordered">
+	<thead>
+		<th>Modalidad</th>
+		<th>Nivel</th>
+		<th>Fecha de ingreso</th>
+		<th>Estado</th>
+		{% if request.user.is_superuser or request.user.groups.all.0.name == 'entrenador' %}
+			<th>Acción</th>
+		{% endif %}
+	</thead>
+	<tbody>
+		{% for modalidad in object.profileuser.modalidadpersona_set.all %}
+			<tr>
+				<td>{{ modalidad.modalidad }}</td>
+				<td>{{ modalidad.nivel.nombre_nivel }}</td>
+				<td>{{ modalidad.fecha_ingreso }}</td>
+				<td>{{ modalidad.get_estado }}</td>
+				{% if request.user.is_superuser or request.user.groups.all.0.name == 'entrenador' %}
+					<td>
+						<a href="{% url 'delete-modalidad-user' modalidad.pk object.pk %}" class="btn btn-danger open-modal" data-toggle="modal" data-target="#Modal">Eliminar</a>
+					</td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>

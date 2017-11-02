@@ -17,6 +17,8 @@
 		<script src="{% static 'js/bootstrap.min.js' %}"></script>
 		<script src="{% static 'js/moment.min.js' %}"></script>
 		<script src="{% static 'js/bootstrap.datetimepicker.min.js' %}"></script>
+		<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 		<script>
 			$(document).on("click", ".open-modal", function(e){
 				$('#Modal').load($(this).attr('href'),function(){
@@ -25,6 +27,9 @@
 					});
 				});
 				return false;
+			});
+			$(document).ready(function() {
+				$('.table').DataTable();
 			});
 		</script>
 		{% block script %}{% endblock %}

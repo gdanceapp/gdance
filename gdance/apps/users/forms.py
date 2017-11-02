@@ -74,3 +74,52 @@ class ScheduleForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(ScheduleForm, self).__init__(*args, **kwargs)
 		self.fields['dia_semana'].widget.attrs.update({'required': True, 'class': 'form-control'})
+
+class ModalidadPersonaForm(forms.ModelForm):
+
+	class Meta:
+		model = ModalidadPersona
+		fields = '__all__'
+		exclude = ('deportista', )
+		widgets = {
+			'fecha_ingreso': forms.TextInput(attrs = {'class': 'form-control date-only','required': True}),
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(ModalidadPersonaForm, self).__init__(*args, **kwargs)
+		self.fields['modalidad'].widget.attrs.update({'required': True, 'class': 'form-control'})
+		self.fields['nivel'].widget.attrs.update({'required': True, 'class': 'form-control'})
+		self.fields['estado'].widget.attrs.update({'required': True, 'class': 'form-control'})
+
+class UserNameForm(forms.ModelForm):
+
+	class Meta:
+		model = User
+		fields = ('first_name', 'last_name')
+		widgets = {
+			'first_name': forms.TextInput(attrs = {'class': 'form-control','required': True}),
+			'last_name': forms.TextInput(attrs = {'class': 'form-control','required': True}),
+		}
+		labels = {
+			'first_name': 'Nombres',
+			'last_name': 'Apellidos',
+		}
+
+class UserProfileForm(forms.ModelForm):
+
+	class Meta:
+		model = ProfileUser
+		fields = '__all__'
+		exclude = ('user', 'foto')
+		widgets = {
+			'numero_documento': forms.TextInput(attrs = {'class': 'form-control', 'required': True}),
+			'numero_telefono': forms.TextInput(attrs = {'class': 'form-control', 'required': True}),
+			'direccion_residencia': forms.TextInput(attrs = {'class': 'form-control', 'required': True}),
+			'descripcion_persona': forms.TextInput(attrs = {'class': 'form-control', 'required': True}),
+			'estatura': forms.TextInput(attrs = {'class': 'form-control', 'required': True}),
+			'peso': forms.TextInput(attrs = {'class': 'form-control', 'required': True}),
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(UserProfileForm, self).__init__(*args, **kwargs)
+		self.fields['tipo_documento'].widget.attrs.update({'required': True, 'class': 'form-control'})

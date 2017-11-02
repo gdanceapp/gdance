@@ -17,12 +17,19 @@
 				<img src="{% static object.profileuser.get_foto %}" class="img-responsive">
 			</div>
 			<div class="col-md-10">
-				<h1>{{ object.profileuser.get_full_name }}</h1>
+				<h1>
+					{{ object.profileuser.get_full_name }}
+					{% if object.groups.all.0.name == 'entrenador' or request.user.is_superuser or request.user == object %}
+						<a href="{% url 'edit-name-user' object.pk %}" class="btn btn-default open-modal" data-toggle="modal" data-target="#Modal">
+							<i class="glyphicon glyphicon-pencil"></i>
+						</a>
+					{% endif %}
+				</h1>
 				<h3>Perfil <b>{{ object.groups.all.0 }}</b></h3>
 				<h3>Peso <b>{{ object.profileuser.peso }}</b></h3>
 				<h3>Estatura <b>{{ object.profileuser.estatura }}</b></h3>
-				{% if user.is_superuser or object == user %}
-					<a href="#" class="btn btn-success">Editar perfil</a>
+				{% if object.groups.all.0.name == 'entrenador' or request.user.is_superuser or request.user == object %}
+					<a href="{% url 'edit-profile-user' object.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Editar datos</a>
 				{% endif %}
 			</div>
 			<div class="col-md-12">

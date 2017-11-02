@@ -2,6 +2,7 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import FormMixin
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views.generic import *
@@ -102,3 +103,73 @@ class ScheduleAddView(SuccessMessageMixin, CreateView):
 	def get_success_url(self):
 		user = User.objects.get(pk = self.kwargs['user'])
 		return reverse('detail-user', kwargs = {'tipo': user.groups.all()[0].name, 'pk': user.pk})
+
+def UserDetailScheduleView(self, pk):
+	schedule = Schedule.objects.get(id = pk)
+	user = schedule.entrenador.user
+	schedule.delete()
+	return HttpResponseRedirect(reverse('detail-user', kwargs = {'tipo': user.groups.all()[0].name, 'pk': user.pk}))
+
+class DeleteModalidadPersonaView(DeleteView):
+	model = ModalidadPersona
+	template_name = 'elements/form_delete.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(DeleteModalidadPersonaView, self).get_context_data(**kwargs)
+		context['title'] = 'Confirmación'
+		context['url'] = reverse('delete-modalidad-user', kwargs = {'pk': self.kwargs['pk'], 'user': self.kwargs['user']})
+		return context
+
+	def get_success_url(self):
+		user = User.objects.get(pk = self.kwargs['user'])
+		return reverse('detail-user', kwargs = {'tipo': user.groups.all()[0].name, 'pk': user.pk})
+
+class AddModalidadUserView(SuccessMessageMixin, CreateView):
+	template_name = 'elements/form_general.html'
+	success_message = 'Modalidad agregada exitosamente'
+	form_class = ModalidadPersonaForm
+
+	def get_context_data(self, **kwargs):
+		context = super(AddModalidadUserView, self).get_context_data(**kwargs)
+		context['title'] = 'Agregar modalidad a usuario'
+		context['url'] = reverse('add-modalidad-user', kwargs = self.kwargs)
+		return context
+
+	def form_valid(self, form):
+		form.instance.deportista = User.objects.get(pk = self.kwargs['pk']).profileuser
+		return super(AddModalidadUserView, self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse('detail-user', kwargs = self.kwargs)
+
+class EditNameUserView(SuccessMessageMixin, UpdateView):
+	model = User
+	template_name = 'elements/form_general.html'
+	success_message = 'Nombre actualizado correctamente'
+	form_class = UserNameForm
+
+	def get_context_data(self, **kwargs):
+		context = super(EditNameUserView, self).get_context_data(**kwargs)
+		context['title'] = 'Actualizar nombre'
+		context['url'] = reverse('edit-name-user', kwargs = {'pk': self.kwargs['pk']})
+		return context
+
+	def get_success_url(self):
+		user = User.objects.get(pk = self.kwargs['pk'])
+		return reverse('detail-user', kwargs = {'tipo': user.groups.all()[0].name, 'pk': user.pk})
+
+class EditProfileUserView(SuccessMessageMixin, UpdateView):
+	model = ProfileUser
+	template_name = 'elements/form_general.html'
+	success_message = 'Perfil actualizado correctamente'
+	form_class = UserProfileForm
+
+	def get_context_data(self, **kwargs):
+		context = super(EditProfileUserView, self).get_context_data(**kwargs)
+		context['title'] = 'Actualizar perfil'
+		context['url'] = reverse('edit-profile-user', kwargs = {'pk': self.kwargs['pk']})
+		return context
+
+	def get_success_url(self):
+		profile = ProfileUser.objects.get(pk = self.kwargs['pk'])
+		return reverse('detail-user', kwargs = {'tipo': profile.user.groups.all()[0].name, 'pk': profile.user.pk})

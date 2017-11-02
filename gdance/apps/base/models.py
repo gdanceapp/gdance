@@ -25,8 +25,8 @@ ESTADO_CHOICES = (
 
 class Modalidad(models.Model):
 	nombre_modalidad = models.CharField(max_length = 30)
-	edad_minima = models.CharField(max_length = 1)
-	edad_maxima = models.CharField(max_length = 1)
+	edad_minima = models.CharField(max_length = 2)
+	edad_maxima = models.CharField(max_length = 2)
 
 	def __str__(self):
 		return self.nombre_modalidad
