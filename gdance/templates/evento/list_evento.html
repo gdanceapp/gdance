@@ -12,14 +12,16 @@
 				</h2>
 				<div class="row">
 					{% for event in object_list %}
-						<div class="col-md-6" style="background-color: #f5f5f5; padding: 20px;">
-							<b>{{ event }}</b>
-							<p><b>Fecha:</b> {{ event.fecha_evento }}</p>
-							<p><b>Dirección:</b> {{ event.direccion_evento }}</p>
-							{% if event.organizador == request.user.profileuser or user.is_superuser %}
-								<a href="{% url 'edit-evento' event.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Editar</a>
-								<a href="{% url 'delete-evento' event.pk %}" class="btn btn-danger open-modal" data-toggle="modal" data-target="#Modal">Elimnar</a>
-							{% endif %}
+						<div class="col-md-6">
+							<div style="background-color: #f5f5f5; padding: 20px;">
+								<b>{{ event }}</b>
+								<p><b>Fecha:</b> {{ event.fecha_evento }}</p>
+								<p><b>Dirección:</b> {{ event.direccion_evento }}</p>
+								{% if event.organizador == request.user.profileuser or user.is_superuser %}
+									<a href="{% url 'edit-evento' event.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Editar</a>
+									<a href="{% url 'delete-evento' event.pk %}" class="btn btn-danger open-modal" data-toggle="modal" data-target="#Modal">Elimnar</a>
+								{% endif %}
+							</div>
 						</div>
 					{% endfor %}
 				</div>
