@@ -1,0 +1,43 @@
+{% extends 'layouts/index.html' %}
+
+{% load static %}
+
+{% block style %}
+	<style type="text/css" media="screen">
+		h3{
+			margin: 0;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+	<div class="container" style="margin-top:80px;">
+		<div class="row">
+			<div class="col-md-2">
+				<img src="{% static request.user.profileuser.get_foto %}" class="img-responsive">
+			</div>
+			<div class="col-md-10">
+				<h1>
+					{{ request.user.profileuser.get_full_name }}
+					<a href="{% url 'edit-name-user' request.user.pk %}" class="btn btn-default open-modal" data-toggle="modal" data-target="#Modal">
+						<i class="glyphicon glyphicon-pencil"></i>
+					</a>
+				</h1>
+				<h3>Perfil <b>{{ request.user.groups.all.0 }}</b></h3>
+				<h3>Peso <b>{{ request.user.profileuser.peso }}</b></h3>
+				<h3>Estatura <b>{{ request.user.profileuser.estatura }}</b></h3>
+				<a href="{% url 'edit-profile-user' request.user.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Editar datos</a>
+				<a href="{% url 'edit-password' %}" class="btn btn-info open-modal" data-toggle="modal" data-target="#Modal">Editar contraseña</a>
+			</div>
+			<div class="col-md-12">
+				<h3>Descripción</h3>
+				<p>{{ request.user.profileuser.descripcion_persona }}</p>
+				{% if request.user.groups.all.0.name == 'entrenador' %}
+					{% include 'elements/content-entrenador.html' with object=request.user %}
+				{% elif request.user.groups.all.0.name == 'deportista' %}
+					{% include 'elements/content-deportista.html' with object=request.user %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,10 +1,13 @@
 # -*- encoding: utf-8 -*-
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.views.generic.edit import FormMixin
-from django.core.urlresolvers import reverse
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.contrib import messages
 from django.views.generic import *
 from django.db.models import Q
 from .models import *
@@ -156,7 +159,7 @@ class EditNameUserView(SuccessMessageMixin, UpdateView):
 
 	def get_success_url(self):
 		user = User.objects.get(pk = self.kwargs['pk'])
-		return reverse('detail-user', kwargs = {'tipo': user.groups.all()[0].name, 'pk': user.pk})
+		return reverse('detail-user', kwargs = {'tipo': user.groups.all()[0].name, 'pk': user.pk}) if self.request.user.groups.all()[0].name == 'entrenador' else reverse('profile')
 
 class EditProfileUserView(SuccessMessageMixin, UpdateView):
 	model = ProfileUser
@@ -172,4 +175,29 @@ class EditProfileUserView(SuccessMessageMixin, UpdateView):
 
 	def get_success_url(self):
 		profile = ProfileUser.objects.get(pk = self.kwargs['pk'])
-		return reverse('detail-user', kwargs = {'tipo': profile.user.groups.all()[0].name, 'pk': profile.user.pk})
+		return reverse('detail-user', kwargs = {'tipo': profile.user.groups.all()[0].name, 'pk': profile.user.pk}) if self.request.user.groups.all()[0].name == 'entrenador' else reverse('profile')
+
+class UserProfileView(TemplateView):
+	template_name = template_dir+'profile.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(UserProfileView, self).get_context_data(**kwargs)
+		context['title'] = 'Mi perfil'
+		return context
+
+def change_password(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)
+			messages.success(request, 'La contraseña ha sido actualizada')
+			return redirect('profile')
+		else:
+			messages.error(request, 'Ha ocurrido un error.')
+	else:
+		form = PasswordChangeForm(request.user)
+	return render(request, 'elements/form_general.html', {
+		'form': form,
+		'url': reverse('edit-password')
+	})

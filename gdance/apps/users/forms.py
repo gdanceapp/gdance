@@ -17,6 +17,18 @@ class NewUserForm(forms.Form):
 	descripcion_persona = forms.CharField(label = 'Descripción', widget = forms.TextInput(attrs = {'class': 'form-control', 'required': False}))
 	foto = forms.FileField(required = False)
 
+	def clean_email(self):
+		email = self.cleaned_data.get('email').lower()
+		if User.objects.filter(email = email).exists() or User.objects.filter(username = email).exists():
+			raise forms.ValidationError('El email ya se ecuentra en uso.')
+		return email
+
+	def clean_numero_documento(self):
+		numero_documento = self.cleaned_data.get('numero_documento').lower()
+		if ProfileUser.objects.filter(numero_documento = numero_documento).exists():
+			raise forms.ValidationError('El número de identificación ya se ecuentra en uso.')
+		return numero_documento
+
 	def new_user(self, tipo):
 		first_name = self.cleaned_data['first_name']
 		last_name = self.cleaned_data['last_name']

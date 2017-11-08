@@ -13,7 +13,7 @@ class ProfileUser(models.Model):
 	numero_telefono = models.CharField(max_length = 10, default = '-')
 	direccion_residencia = models.CharField(max_length = 80)
 	descripcion_persona = models.CharField(max_length = 2000, blank = True, null = True)
-	estatura = models.CharField(max_length = 3)
+	estatura = models.CharField(max_length = 5)
 	peso = models.CharField(max_length = 7)
 
 	def __str__(self):

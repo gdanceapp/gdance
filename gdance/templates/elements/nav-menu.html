@@ -1,4 +1,7 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+{% for message in messages %}
+	<div class="alert alert-{{ message.tags }}" style="margin-bottom: 0; border-radius: 0;">{{ message }}</div>
+{% endfor %}
+<nav class="navbar navbar-default" style="margin-bottom: 0">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -19,7 +22,7 @@
 			<li>
 				<a href="{% url 'list-evento' %}">Eventos</a>
 			</li>
-			{% if request.user.is_superuser %}
+			{% if request.user.is_superuser or request.user.groups.all.0.name == 'entrenador' %}
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registro <span class="caret"></span></a>
 					<ul class="dropdown-menu">
@@ -27,14 +30,14 @@
 							<a href="{% url 'list-user' 'deportista' %}">Deportistas</a>
 						</li>
 						<li>
-							<a href="{% url 'list-user' 'entrenador' %}">Entenadores</a>
+							<a href="{% url 'list-user' 'entrenador' %}">Entrenadores</a>
 						</li>
 					</ul>
 				</li>
 			{% endif %}
 			{% if request.user.is_authenticated %}
 				<li>
-					<a href="#">Perfil</a>
+					<a href="{% url 'profile' %}">Perfil</a>
 				</li>
 				<li>
 					<a href="{% url 'logout' %}">Cerrar sesión</a>
