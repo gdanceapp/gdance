@@ -103,6 +103,12 @@ class ModalidadPersonaForm(forms.ModelForm):
 		self.fields['nivel'].widget.attrs.update({'required': True, 'class': 'form-control'})
 		self.fields['estado'].widget.attrs.update({'required': True, 'class': 'form-control'})
 
+	def save(self):
+		save_data = super(ModalidadPersonaForm, self).save(commit = False)
+		data_before = ModalidadPersona.objects.filter(deportista = save_data.deportista).update(estado = 'I')
+		save_data.save()
+		return save_data
+
 class UserNameForm(forms.ModelForm):
 
 	class Meta:

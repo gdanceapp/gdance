@@ -8,7 +8,7 @@ login_forbidden = user_passes_test(lambda u: u.is_anonymous(), '/')
 
 user_detail_patterns = [
 	url(r'^eliminar/$', login_required(group_required('entrenador')(DeleteUserView.as_view())), name='delete-user'),
-	url(r'^detalle/$', login_required(UserDetailView.as_view()), name='detail-user'),
+	url(r'^detalle/$', login_required(group_required('entrenador')(UserDetailView.as_view())), name='detail-user'),
 	url(r'^agregar-modalidad/$', login_required(group_required('entrenador')(AddModalidadUserView.as_view())), name='add-modalidad-user'),
 ]
 

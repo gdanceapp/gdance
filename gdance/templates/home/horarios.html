@@ -1,0 +1,33 @@
+{% extends 'layouts/index.html' %}
+
+{% load static %}
+
+{% block content %}
+	<div class="container">
+		<h1 class="mt-4">Nuestros horarios</h1>
+		<div class="row">
+			{% for entrenador in entrenadores %}
+				<div class="col-md-12" style="margin-bottom: 10px; border-bottom: 1px solid #f5f5f5;">
+					<div class="row">
+						<div class="col-md-2 text-center">
+							<img src="{% static entrenador.profileuser.get_foto %}" class="img-responsive">
+							<h3>{{ entrenador.profileuser.get_full_name }}</h3>
+						</div>
+						<div class="col-md-10">
+							<div class="row">
+								{% for horario in entrenador.profileuser.schedule_set.all %}
+									<div class="col-md-4">
+										<div style="background-color: #f5f5f5; padding: 10px;">
+											<h4><b>{{ horario.get_dia_semana }}</b></h4>
+											<h5>{{ horario.hora_inicio }} - {{ horario.hora_final }}</h5>
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

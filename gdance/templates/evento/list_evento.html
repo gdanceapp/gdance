@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-md-8">
 				<h2>Lista de eventos
-					{% if user.is_superuser or user.groups.name == 'Entrenador' %}
+					{% if request.user.is_superuser or request.user.groups.all.0.name == 'entrenador' %}
 						<a href="{% url 'add-evento' %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Agregar evento</a>
 					{% endif %}
 				</h2>

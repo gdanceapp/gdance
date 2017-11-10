@@ -24,7 +24,7 @@
 					</a>
 				</h1>
 				<h3>Perfil <b>{{ request.user.groups.all.0 }}</b></h3>
-				<h3>Peso <b>{{ request.user.profileuser.peso }}</b></h3>
+				<h3>Peso <b>{{ request.user.profileuser.peso }}kg</b></h3>
 				<h3>Estatura <b>{{ request.user.profileuser.estatura }}</b></h3>
 				<a href="{% url 'edit-profile-user' request.user.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Editar datos</a>
 				<a href="{% url 'edit-password' %}" class="btn btn-info open-modal" data-toggle="modal" data-target="#Modal">Editar contraseña</a>

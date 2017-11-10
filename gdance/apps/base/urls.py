@@ -5,4 +5,5 @@ from .views import *
 urlpatterns = patterns('socialapp.apps.home.views',
 	url(r'^$', InicioTemplateView.as_view(), name = 'inicio'),
 	url(r'^nosotros/$', NosotrosTemplateView.as_view(), name = 'nosotros'),
+	url(r'^horarios/$', HorariosTemplateView.as_view(), name = 'horarios'),
 )

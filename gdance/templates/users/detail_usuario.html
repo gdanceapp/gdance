@@ -26,7 +26,7 @@
 					{% endif %}
 				</h1>
 				<h3>Perfil <b>{{ object.groups.all.0 }}</b></h3>
-				<h3>Peso <b>{{ object.profileuser.peso }}</b></h3>
+				<h3>Peso <b>{{ object.profileuser.peso }}kg</b></h3>
 				<h3>Estatura <b>{{ object.profileuser.estatura }}</b></h3>
 				{% if object.groups.all.0.name == 'entrenador' or request.user.is_superuser or request.user == object %}
 					<a href="{% url 'edit-profile-user' object.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Editar datos</a>

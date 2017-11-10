@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views.generic import *
 
@@ -20,10 +21,11 @@ class NosotrosTemplateView(TemplateView):
 		context['title'] = 'Nosotros'
 		return context
 
-class ConfTemplateView(TemplateView):
-	template_name = template_dir+'configuracion.html'
+class HorariosTemplateView(TemplateView):
+	template_name = template_dir+'horarios.html'
 
 	def get_context_data(self, **kwargs):
-		context = super(ConfTemplateView, self).get_context_data(**kwargs)
-		context['title'] = 'Configuración'
+		context = super(HorariosTemplateView, self).get_context_data(**kwargs)
+		context['title'] = 'Horarios'
+		context['entrenadores'] = User.objects.filter(groups__name = 'entrenador')
 		return context
