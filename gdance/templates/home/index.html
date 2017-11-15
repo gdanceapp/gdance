@@ -1,10 +1,57 @@
 {% extends 'layouts/index.html' %}
 
+{% load static %}
+
 {% block content %}
-	<header class="business-header"></header>
+	<header id="myCarousel" class="carousel slide">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+		</ol>
+
+		<!-- Wrapper for Slides -->
+		<div class="carousel-inner">
+			<div class="item active">
+				<!-- Set the first background image using inline CSS below. -->
+				<div class="fill" style="background-image:url('/static/img/s1.jpg');"></div>
+			</div>
+			<div class="item">
+				<!-- Set the second background image using inline CSS below. -->
+				<div class="fill" style="background-image:url('/static/img/s2.jpg');"></div>
+			</div>
+			<div class="item">
+				<!-- Set the third background image using inline CSS below. -->
+				<div class="fill" style="background-image:url('/static/img/s3.jpg');"></div>
+			</div>
+			<div class="item">
+				<!-- Set the third background image using inline CSS below. -->
+				<div class="fill" style="background-image:url('/static/img/s4.jpg');"></div>
+			</div>
+		</div>
+
+		<!-- Controls -->
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			<span class="icon-prev"></span>
+		</a>
+		<a class="right carousel-control" href="#myCarousel" data-slide="next">
+			<span class="icon-next"></span>
+		</a>
+
+	</header>
 	<div class="container">
 		<h2 class="mt-4">Lorem Ipsum</h2>
 		<p>Sed in erat nec elit sollicitudin consequat. Mauris id massa orci. Quisque scelerisque erat at diam condimentum, vel dapibus purus tincidunt. Nullam mollis sapien a eros posuere rhoncus. Sed interdum accumsan justo, vitae semper felis sodales vel. Phasellus ultricies sem vehicula mi rutrum ornare. Nunc eros sapien, pellentesque quis dignissim sit amet, lacinia quis elit. Fusce iaculis interdum massa ac consectetur. Aenean aliquam lacus id porttitor convallis. Nulla ullamcorper magna quis neque ultricies aliquam.</p>
 		<p>Curabitur venenatis semper eros, eget elementum ipsum. Ut ut ligula ut nibh bibendum suscipit id ut mi. Nullam dignissim sodales orci, et condimentum ipsum facilisis a. Ut ultricies ligula ac enim egestas, consectetur commodo tortor tempus. Nullam tempor dapibus urna, at lobortis sem lobortis ac. Sed mollis pretium tincidunt. Donec vitae tincidunt justo. Sed a aliquam diam.</p>
 	</div>
+{% endblock %}
+
+{% block script %}
+	<script>
+		$('.carousel').carousel({
+			interval: 5000 //changes the speed
+		})
+	</script>
 {% endblock %}
