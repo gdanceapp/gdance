@@ -1,10 +1,16 @@
-<h3>Horario <a href="{% url 'add-horario' object.pk %}" class="btn btn-info open-modal" data-toggle="modal" data-target="#Modal">Agregar horario</a></h3>
+<h3>Horario
+	{% if request.user.is_superuser or request.user == object or request.user.groups.all.0.name == 'entrenador' %}
+		<a href="{% url 'add-horario' object.pk %}" class="btn btn-info open-modal" data-toggle="modal" data-target="#Modal">Agregar horario</a>
+	{% endif %}
+</h3>
 <table class="table table-hover table-bordered">
 	<thead>
 		<th>Día</th>
 		<th>Hora inicio</th>
 		<th>Hora final</th>
-		<th>Acción</th>
+		{% if request.user.is_superuser or request.user == object or request.user.groups.all.0.name == 'entrenador' %}
+			<th>Acción</th>
+		{% endif %}
 	</thead>
 	<tbody>
 		{% for schedule in object.profileuser.schedule_set.all %}
@@ -12,9 +18,11 @@
 				<td>{{ schedule.get_dia_semana }}</td>
 				<td>{{ schedule.hora_inicio }}</td>
 				<td>{{ schedule.hora_final }}</td>
-				<td>
-					<a href="{% url 'delete-horario-user' schedule.pk %}" class="btn btn-danger">Eliminar</a>
-				</td>
+				{% if request.user.is_superuser or request.user == object or request.user.groups.all.0.name == 'entrenador' %}
+					<td>
+						<a href="{% url 'delete-horario-user' schedule.pk %}" class="btn btn-danger">Eliminar</a>
+					</td>
+				{% endif %}
 			</tr>
 		{% endfor %}
 	</tbody>

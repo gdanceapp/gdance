@@ -11,7 +11,9 @@
 					<div class="row">
 						<div class="col-md-2 text-center">
 							<img src="{% static entrenador.profileuser.get_foto %}" class="img-responsive">
-							<h3>{{ entrenador.profileuser.get_full_name }}</h3>
+							<h3>
+								<a href="{% url 'detail-user' entrenador.groups.all.0.name entrenador.pk %}" title="">{{ entrenador.profileuser.get_full_name }}</a>
+							</h3>
 						</div>
 						<div class="col-md-10">
 							<div class="row">

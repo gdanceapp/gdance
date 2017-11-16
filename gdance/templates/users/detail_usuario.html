@@ -19,7 +19,7 @@
 			<div class="col-md-10">
 				<h1>
 					{{ object.profileuser.get_full_name }}
-					{% if object.groups.all.0.name == 'entrenador' or request.user.is_superuser or request.user == object %}
+					{% if request.user.is_superuser or request.user == object or request.user.groups.all.0.name == 'entrenador' %}
 						<a href="{% url 'edit-name-user' object.pk %}" class="btn btn-default open-modal" data-toggle="modal" data-target="#Modal">
 							<i class="glyphicon glyphicon-pencil"></i>
 						</a>
@@ -28,7 +28,7 @@
 				<h3>Perfil <b>{{ object.groups.all.0 }}</b></h3>
 				<h3>Peso <b>{{ object.profileuser.peso }}kg</b></h3>
 				<h3>Estatura <b>{{ object.profileuser.estatura }}</b></h3>
-				{% if object.groups.all.0.name == 'entrenador' or request.user.is_superuser or request.user == object %}
+				{% if request.user.is_superuser or request.user == object or request.user.groups.all.0.name == 'entrenador' %}
 					<a href="{% url 'edit-profile-user' object.pk %}" class="btn btn-success open-modal" data-toggle="modal" data-target="#Modal">Editar datos</a>
 				{% endif %}
 			</div>
