@@ -24,7 +24,7 @@ class NewUserForm(forms.Form):
 		return email
 
 	def clean_numero_documento(self):
-		numero_documento = self.cleaned_data.get('numero_documento').lower()
+		numero_documento = self.cleaned_data.get('numero_documento')
 		if ProfileUser.objects.filter(numero_documento = numero_documento).exists():
 			raise forms.ValidationError('El número de identificación ya se ecuentra en uso.')
 		return numero_documento

@@ -26,6 +26,7 @@
 					{% endif %}
 				</h1>
 				<h3>Perfil <b>{{ object.groups.all.0 }}</b></h3>
+				<h3>Email <b>{{ object.username }}</b></h3>
 				<h3>Peso <b>{{ object.profileuser.peso }}kg</b></h3>
 				<h3>Estatura <b>{{ object.profileuser.estatura }}</b></h3>
 				{% if request.user.is_superuser or request.user == object or request.user.groups.all.0.name == 'entrenador' %}
