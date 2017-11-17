@@ -86,6 +86,7 @@ class ScheduleForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(ScheduleForm, self).__init__(*args, **kwargs)
 		self.fields['dia_semana'].widget.attrs.update({'required': True, 'class': 'form-control'})
+		self.fields['modalidad'].widget.attrs.update({'required': True, 'class': 'form-control'})
 
 class ModalidadPersonaForm(forms.ModelForm):
 

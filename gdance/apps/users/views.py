@@ -175,7 +175,7 @@ class EditProfileUserView(SuccessMessageMixin, UpdateView):
 
 	def get_success_url(self):
 		profile = ProfileUser.objects.get(pk = self.kwargs['pk'])
-		return reverse('detail-user', kwargs = {'tipo': profile.user.groups.all()[0].name, 'pk': profile.user.pk}) if self.request.user.groups.all()[0].name == 'entrenador' else reverse('profile')
+		return reverse('detail-user', kwargs = {'tipo': profile.user.groups.all()[0].name, 'pk': profile.user.pk})
 
 class UserProfileView(TemplateView):
 	template_name = template_dir+'profile.html'

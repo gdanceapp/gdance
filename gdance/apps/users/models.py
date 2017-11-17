@@ -42,6 +42,7 @@ class Schedule(models.Model):
 	dia_semana = models.CharField(max_length = 1, choices = DIA_SEMANA_CHOICES)
 	hora_inicio = models.TimeField(auto_now = False)
 	hora_final = models.TimeField(auto_now = False)
+	modalidad = models.ForeignKey(Modalidad)
 
 	def __str__(self):
 		return self.entrenador.user.first_name
